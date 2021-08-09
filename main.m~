@@ -1,0 +1,71 @@
+% Script for simple kinematic control
+
+clear;
+close all;
+clc;
+
+include_namespace_dq; 
+
+%% Initialize V-REP interface
+vi = DQ_VrepInterface;
+vi.disconnect_all(); 
+vi.connect('127.0.0.1',19997);
+vi.start_simulation();
+
+%% Initialize VREP Robots
+fep_vreprobot = FEpVrepRobot('Franka',vi);
+
+%% Load DQ Robotics kinematics
+fep  = fep_vreprobot.kinematics();
+
+% maximum joint ranges (deg): (q1..q7)
+%       -166.0031 -101.0010 -166.0031 -176.0012 -166.0031  -1.0027  -166.0031
+q_min = [-2.8973   -1.7628   -2.8973   -3.0718   -2.8973   -0.0175  -2.8973];
+
+%        166.0031  101.0010  166.0031 -3.9992   166.0031   215.0024  166.0031
+q_max = [ 2.8973    1.7628    2.8973  -0.0698    2.8973    3.7525    2.8973];
+
+   
+goal = [-pi/2.0, 0.004, 0.0, -1.57156, 0.0, 1.57075, 0.0];
+xd
+e = zeros(8,1);
+disp("Starting control loop:");
+
+while(norm(e)>0.05)
+   theta = vi.get_joint_positions(fep_vreprobot.joint_names); 
+   disp("q: ");
+   theta
+   x = fep.fkm(fep_q);
+   e = vec8(x -xd)
+end
+
+
+
+
+    while(e.norm()>0.05)
+    {
+        theta      = vi.get_joint_positions(joint_names);
+        std::cout << "Theta ist: "<< std::endl << theta << std::endl;
+        DQ x       = robot.fkm(theta);
+        e          = vec8(x-xd);
+        MatrixXd J = robot.pose_jacobian(theta);
+
+        VectorXd u = -0.01*pinv(J)*e;
+        theta      = theta+u;
+        // std::cout << "diff: "<< std::endl << u << std::endl;
+        std::cout << "---------------------------------------------------------" << std::endl;
+
+        vi.set_joint_target_positions(joint_names,theta);
+
+        std::this_thread::sleep_for(std::chrono::milliseconds(10));
+    }
+    std::cout << "Control finished..." << std::endl;
+
+    std::cout << "Stopping V-REP simulation..." << std::endl;
+    vi.stop_simulation();
+
+    vi.disconnect();
+
+
+    return 0;
+}
