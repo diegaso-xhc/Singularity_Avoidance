@@ -3,6 +3,7 @@ classdef FEpVrepRobot < DQ_VrepRobot
     properties
         joint_names;
         base_frame_name;
+        base_frame;
     end
     
     methods 
@@ -44,10 +45,14 @@ classdef FEpVrepRobot < DQ_VrepRobot
         function kin = kinematics(obj)
             %Standard D-H of FE Panda
             FEp_DH_theta = [0, 0, 0, 0, 0, 0];            
-            FEp_DH_d = [0.1625, 0, 0, 0.1333, 0.0997, 0.0996];
-            FEp_DH_a = [0, -0.425, -0.3922, 0, 0, 0];
+            FEp_DH_d = [0.1273, 0, 0, 0.163941, 0.1157, 0.0922];
+            FEp_DH_a = [0, -0.612, -0.5723, 0, 0, 0];
             FEp_DH_alpha = [pi/2, 0 , 0, pi/2, -pi/2, 0];
-                
+            
+%             FEp_DH_theta = [0, 0, 0, 0, 0, 0];            
+%             FEp_DH_d = [0.1807, 0, 0, 0.17415, 0.1199, 0.1166];
+%             FEp_DH_a = [0, -0.6127, -0.5715, 0, 0, 0];
+%             FEp_DH_alpha = [pi/2, 0 , 0, pi/2, -pi/2, 0];
 
 %             FEp_DH_theta=[0, 0, 0, 0, 0, 0, 0];
 %             FEp_DH_d = [0.333, 0, 0.316, 0, 0.384, 0, 0];
@@ -62,6 +67,7 @@ classdef FEpVrepRobot < DQ_VrepRobot
             % We set the transformation from the world frame to the robot
             % base frame. Therefore, the end-effector pose is given by
             % pose_effector = transformation_from_world_to_base*fkm(q);
+            %kin.set_reference_frame(obj.vrep_interface.get_object_pose(obj.base_frame_name));
 %             kin.set_reference_frame(obj.vrep_interface.get_object_pose(obj.base_frame_name));
 %             kin.set_base_frame(obj.vrep_interface.get_object_pose(obj.base_frame_name));
             % kin.set_effector(1+0.5*DQ.E*DQ.k*0.1070);
