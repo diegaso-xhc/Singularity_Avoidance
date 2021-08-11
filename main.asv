@@ -23,7 +23,7 @@ q_min = [-pi/2 -pi/2 -pi/2 -2*pi -pi/2 -2*pi];
 
 q_max = [pi/2 0 pi/2 2*pi pi/2 2*pi];
 
-goal = [1.4907 -1.0102 1.0535 -2.8032 1.5705 0.0722];
+goal = [0, 0, 0, 0, 0, 0];
 load('Traj_tele_3.mat')
 %% Contol Loop
 

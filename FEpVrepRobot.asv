@@ -66,11 +66,11 @@ classdef FEpVrepRobot < DQ_VrepRobot
             kin = DQ_SerialManipulator(FEp_DH_matrix, 'standard');
             % We set the transformation from the world frame to the robot
             % base frame. Therefore, the end-effector pose is given by
-%             transfW_rf = [[-1 0 0; 0 1 0; 0 0 -1], [0,0,1]'; 0 0 0 1];
+            transfW_rf = [[-1 0 0; 0 1 0; 0 0 -1], [0,0,1]'; 0 0 0 1];
 %             pose_effector = MatrixToDQuaternion(transfW_rf)*fkm(q);
 %             kin.set_reference_frame(obj.vrep_interface.get_object_pose(obj.base_frame_name));
-%               kin.set_reference_frame(obj.vrep_interface.get_object_pose(obj.base_frame_name));
-%               kin.set_base_frame(obj.vrep_interface.get_object_pose(obj.base_frame_name));
+%             kin.set_reference_frame(obj.vrep_interface.get_object_pose(obj.base_frame_name));
+%             kin.set_base_frame(obj.vrep_interface.get_object_pose(obj.base_frame_name));
             % kin.set_effector(1+0.5*DQ.E*DQ.k*0.1070);
 %             kin.set_effector(1+0.5*DQ.E*DQ.k*0.1070);
         end
